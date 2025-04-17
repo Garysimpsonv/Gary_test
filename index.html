@@ -1,0 +1,395 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2821
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww29200\viewh15560\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="es">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>Infograf\'eda Interactiva: Gemini y Notebook LM (Casos de Uso)</title>\
+    <script src="https://cdn.tailwindcss.com"></script>\
+    <style>\
+        /* Estilos generales y para la infograf\'eda */\
+        body \{\
+            font-family: 'Inter', sans-serif; /* Usar una fuente com\'fan y limpia */\
+        \}\
+        /* Estilo para los popups de detalles */\
+        .details-popup \{\
+            display: none; /* Oculto por defecto */\
+            position: absolute;\
+            background-color: #1f2937; /* gray-800 */\
+            color: white;\
+            padding: 0.75rem; /* p-3 */\
+            border-radius: 0.375rem; /* rounded-md */\
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\
+            font-size: 0.875rem; /* text-sm */\
+            line-height: 1.25rem; /* leading-5 */\
+            max-width: 300px; /* Ancho m\'e1ximo */\
+            z-index: 50; /* Asegurar que est\'e9 por encima */\
+            opacity: 0;\
+            transition: opacity 0.2s ease-in-out;\
+            pointer-events: none; /* No interfiere con el cursor */\
+            white-space: normal; /* Permitir que el texto se ajuste */\
+        \}\
+        /* Clase para mostrar el popup */\
+        .details-popup.show \{\
+            display: block;\
+            opacity: 1;\
+        \}\
+        /* Elemento que dispara el hover */\
+        .hover-trigger \{\
+            cursor: help; /* Indica que hay ayuda/informaci\'f3n */\
+            position: relative; /* Necesario para el posicionamiento del popup */\
+        \}\
+        /* L\'ednea conectora (opcional, para guiar la vista) */\
+        .connector \{\
+            width: 2px;\
+            background-color: #d1d5db; /* gray-300 */\
+            margin: 0 auto; /* Centrar */\
+            flex-grow: 1; /* Ocupa espacio entre elementos */\
+            min-height: 50px;\
+        \}\
+        /* Iconos SVG */\
+        .info-icon \{\
+             width: 1.5rem; /* w-6 */\
+             height: 1.5rem; /* h-6 */\
+             display: inline-block;\
+             vertical-align: middle;\
+             margin-right: 0.5rem; /* mr-2 */\
+        \}\
+        /* Asegurar que los elementos dentro del grid tengan altura consistente si es necesario */\
+        .grid-item \{\
+            display: flex; /* Usa flexbox para alinear contenido */\
+            flex-direction: column; /* Apila contenido verticalmente */\
+            height: 100%; /* Ocupa toda la altura de la celda del grid */\
+        \}\
+        .grid-item > div \{\
+             flex-grow: 1; /* Permite que el div interior crezca */\
+        \}\
+\
+    </style>\
+    <link rel="preconnect" href="https://fonts.googleapis.com">\
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\
+</head>\
+<body class="bg-gray-100 p-4 md:p-8">\
+\
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-xl p-6 md:p-10 space-y-8">\
+\
+        <header class="text-center border-b pb-4">\
+            <h1 class="text-3xl font-bold text-indigo-700">Gemini & Notebook LM</h1>\
+            <p class="text-lg text-gray-600 mt-1">Potenciando tu Productividad e Investigaci\'f3n con IA</p>\
+            <p class="text-sm text-gray-500 mt-2">Casos de Uso Clave (Basado en Briefing y Documento)</p>\
+        </header>\
+\
+        <section class="text-center">\
+             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Una Combinaci\'f3n Poderosa</h2>\
+             <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">\
+                 <div class="bg-blue-50 p-4 rounded-lg text-center hover-trigger" data-popup-target="popup-gemini-intro">\
+                     <svg class="info-icon text-blue-600 mx-auto mb-2 h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L1.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L24 5.25l-.813 2.846a4.5 4.5 0 0 0-3.09 3.09L17.25 12l2.846.813a4.5 4.5 0 0 0 3.09 3.09L24 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L18.25 12Z" /></svg>\
+                     <h3 class="font-semibold text-blue-800">Gemini</h3>\
+                     <p class="text-sm text-blue-700">An\'e1lisis profundo y creaci\'f3n</p>\
+                 </div>\
+                 <div class="text-4xl font-light text-gray-400">+</div>\
+                 <div class="bg-green-50 p-4 rounded-lg text-center hover-trigger" data-popup-target="popup-nb-intro">\
+                     <svg class="info-icon text-green-600 mx-auto mb-2 h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>\
+                     <h3 class="font-semibold text-green-800">Notebook LM</h3>\
+                     <p class="text-sm text-green-700">Organizaci\'f3n y contexto</p>\
+                 </div>\
+             </div>\
+             <p class="mt-4 text-gray-700 leading-relaxed hover-trigger" data-popup-target="popup-integration-intro">\
+                 Juntos, ofrecen un <strong class="text-indigo-600">flujo de trabajo optimizado</strong> para investigar, analizar y crear contenido eficientemente.\
+             </p>\
+         </section>\
+\
+         <div class="connector" style="height: 30px;"></div>\
+\
+         <section>\
+             <h2 class="text-2xl font-semibold text-blue-700 mb-4 flex items-center">\
+                 <svg class="info-icon text-blue-600 h-8 w-8 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L1.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L24 5.25l-.813 2.846a4.5 4.5 0 0 0-3.09 3.09L17.25 12l2.846.813a4.5 4.5 0 0 0 3.09 3.09L24 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L18.25 12Z" /></svg>\
+                 Casos de Uso Principales de Gemini\
+             </h2>\
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">\
+                 <div class="bg-blue-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-gemini-speed">\
+                     <svg class="info-icon text-blue-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>\
+                     <div>\
+                         <h3 class="font-semibold text-blue-800">Velocidad y Razonamiento</h3>\
+                         <p class="text-sm text-blue-700">R\'e1pido, entiende contexto y razona eficazmente.</p>\
+                     </div>\
+                 </div>\
+                 <div class="bg-blue-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-gemini-textgen">\
+                      <svg class="info-icon text-blue-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg>\
+                     <div>\
+                         <h3 class="font-semibold text-blue-800">Generaci\'f3n Texto Avanzado</h3>\
+                         <p class="text-sm text-blue-700">Crea borradores, refina tono, extensi\'f3n o formato.</p>\
+                     </div>\
+                 </div>\
+                 <div class="bg-blue-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-gemini-code">\
+                     <svg class="info-icon text-blue-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" /></svg>\
+                     <div>\
+                         <h3 class="font-semibold text-blue-800">Asistencia en Programaci\'f3n</h3>\
+                         <p class="text-sm text-blue-700">Escribe, explica y depura c\'f3digo.</p>\
+                     </div>\
+                 </div>\
+                 <div class="bg-blue-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-gemini-research">\
+                     <svg class="info-icon text-blue-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>\
+                     <div>\
+                         <h3 class="font-semibold text-blue-800">Deep Research</h3>\
+                         <p class="text-sm text-blue-700">Investigaci\'f3n a fondo con informes y fuentes.</p>\
+                     </div>\
+                 </div>\
+                 <div class="bg-blue-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-gemini-multi">\
+                     <svg class="info-icon text-blue-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>\
+                     <div>\
+                         <h3 class="font-semibold text-blue-800">Multimodalidad</h3>\
+                         <p class="text-sm text-blue-700">Procesa texto, imagen, video y datos.</p>\
+                     </div>\
+                 </div>\
+                  <div class="bg-blue-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-gemini-audio">\
+                      <svg class="info-icon text-blue-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" /></svg>\
+                     <div>\
+                         <h3 class="font-semibold text-blue-800">Audio Overview</h3>\
+                         <p class="text-sm text-blue-700">Convierte documentos en res\'famenes tipo podcast.</p>\
+                     </div>\
+                 </div>\
+             </div>\
+         </section>\
+\
+         <div class="connector"></div>\
+\
+         <section>\
+              <h2 class="text-2xl font-semibold text-green-700 mb-4 flex items-center">\
+                  <svg class="info-icon text-green-600 h-8 w-8 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>\
+                 Casos de Uso Principales de Notebook LM\
+             </h2>\
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">\
+                   <div class="bg-green-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-nb-research">\
+                      <svg class="info-icon text-green-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>\
+                      <div>\
+                         <h3 class="font-semibold text-green-800">Investigaci\'f3n y Estudio</h3>\
+                         <p class="text-sm text-green-700">Sintetiza ideas de m\'faltiples fuentes subidas.</p>\
+                     </div>\
+                 </div>\
+                   <div class="bg-green-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-nb-summary">\
+                      <svg class="info-icon text-green-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" /></svg>\
+                      <div>\
+                         <h3 class="font-semibold text-green-800">Res\'famenes e Ideas</h3>\
+                         <p class="text-sm text-green-700">Genera res\'famenes, ideas y preguntas clave.</p>\
+                     </div>\
+                 </div>\
+                  <div class="bg-green-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-nb-org">\
+                     <svg class="info-icon text-green-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.75h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5-13.5h16.5M3.75 6a2.25 2.25 0 0 1 2.25-2.25h12a2.25 2.25 0 0 1 2.25 2.25v12a2.25 2.25 0 0 1-2.25 2.25h-12a2.25 2.25 0 0 1-2.25-2.25V6Z" /></svg>\
+                     <div>\
+                         <h3 class="font-semibold text-green-800">Organizaci\'f3n de Informaci\'f3n</h3>\
+                         <p class="text-sm text-green-700">Gestiona fuentes en pesta\'f1as, como un "binder".</p>\
+                     </div>\
+                 </div>\
+                   <div class="bg-green-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-nb-guides">\
+                      <svg class="info-icon text-green-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" /></svg>\
+                      <div>\
+                         <h3 class="font-semibold text-green-800">Creaci\'f3n Gu\'edas/Formatos</h3>\
+                         <p class="text-sm text-green-700">Crea gu\'edas de estudio, blogs, planes, etc.</p>\
+                     </div>\
+                 </div>\
+                   <div class="bg-green-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-nb-analysis">\
+                      <svg class="info-icon text-green-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>\
+                      <div>\
+                         <h3 class="font-semibold text-green-800">An\'e1lisis de Documentos</h3>\
+                         <p class="text-sm text-green-700">Analiza y extrae info de PDFs, Docs, URLs, videos.</p>\
+                     </div>\
+                 </div>\
+                  <div class="bg-green-50 p-4 rounded-lg hover-trigger flex items-start grid-item" data-popup-target="popup-nb-maps">\
+                      <svg class="info-icon text-green-500 flex-shrink-0 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg>\
+                      <div>\
+                         <h3 class="font-semibold text-green-800">Mapas Conceptuales</h3>\
+                         <p class="text-sm text-green-700">Visualiza conexiones entre ideas autom\'e1ticamente.</p>\
+                     </div>\
+                 </div>\
+                 </div>\
+         </section>\
+\
+        <div class="connector"></div>\
+\
+        <section>\
+             <h2 class="text-2xl font-semibold text-indigo-700 mb-4 text-center">Integraci\'f3n en Acci\'f3n: Flujos de Trabajo</h2>\
+             <div class="space-y-4">\
+                 <div class="bg-indigo-50 p-4 rounded-lg hover-trigger" data-popup-target="popup-use-landing">\
+                     <h3 class="font-semibold text-indigo-800">\uc0\u55357 \u56960  Investigaci\'f3n \u8594  Landing Page</h3>\
+                     <p class="text-sm text-indigo-700">Investiga (NLM) \uc0\u8594  Dise\'f1a y escribe (Gemini).</p>\
+                 </div>\
+                 <div class="bg-indigo-50 p-4 rounded-lg hover-trigger" data-popup-target="popup-use-viz">\
+                     <h3 class="font-semibold text-indigo-800">\uc0\u55357 \u56522  An\'e1lisis T\'e9cnico \u8594  Visualizaci\'f3n</h3>\
+                     <p class="text-sm text-indigo-700">Analiza docs (NLM) \uc0\u8594  Crea infograf\'edas (Gemini).</p>\
+                 </div>\
+                 <div class="bg-indigo-50 p-4 rounded-lg hover-trigger" data-popup-target="popup-use-learn">\
+                     <h3 class="font-semibold text-indigo-800">\uc0\u55357 \u56538  Recopilaci\'f3n \u8594  Aprendizaje</h3>\
+                     <p class="text-sm text-indigo-700">Recopila fuentes (NLM) \uc0\u8594  Genera m\'f3dulos (Gemini).</p>\
+                 </div>\
+                 <div class="bg-indigo-50 p-4 rounded-lg hover-trigger" data-popup-target="popup-use-validate">\
+                     <h3 class="font-semibold text-indigo-800">\uc0\u55357 \u56481  Investigaci\'f3n \u8594  Prototipo</h3>\
+                     <p class="text-sm text-indigo-700">Investiga mercado (NLM) \uc0\u8594  Prototipa (Gemini).</p>\
+                 </div>\
+             </div>\
+         </section>\
+\
+         <div class="connector" style="height: 30px;"></div>\
+\
+         <section class="text-center">\
+              <h2 class="text-2xl font-semibold text-gray-800 mb-4">Disponibilidad</h2>\
+              <div class="flex flex-col md:flex-row justify-center gap-4">\
+                  <div class="border p-3 rounded-lg hover-trigger flex-1" data-popup-target="popup-avail-free">\
+                      <h3 class="font-semibold text-gray-700">Gratuito</h3>\
+                      <p class="text-sm text-gray-600">Gemini (b\'e1sico), Notebook LM, AI Studio</p>\
+                  </div>\
+                   <div class="border p-3 rounded-lg hover-trigger flex-1" data-popup-target="popup-avail-paid">\
+                      <h3 class="font-semibold text-gray-700">Gemini Advanced</h3>\
+                      <p class="text-sm text-gray-600">$19.99/mes (m\'e1s funciones y l\'edmites)</p>\
+                  </div>\
+              </div>\
+         </section>\
+\
+        <footer class="text-center border-t pt-4 mt-8">\
+             <p class="text-gray-700 font-semibold hover-trigger" data-popup-target="popup-conclusion">Gemini y Notebook LM: Herramientas vers\'e1tiles para transformar tu forma de trabajar y aprender.</p>\
+             <p class="text-xs text-gray-500 mt-2">Pasa el cursor sobre los elementos para m\'e1s detalles.</p>\
+        </footer>\
+\
+    </div>\
+\
+    <div id="popup-container">\
+        <div id="popup-gemini-intro" class="details-popup">Gemini se enfoca en el an\'e1lisis profundo de informaci\'f3n y la generaci\'f3n de contenido diverso (texto, c\'f3digo, im\'e1genes, etc.). Incluye Gemini 2.5 Pro en versiones avanzadas.</div>\
+        <div id="popup-gemini-speed" class="details-popup">Descrito como "una locura", es r\'e1pido, entiende el contexto como pocos y tiene una capacidad de razonamiento sorprendente (especialmente 2.5 Pro).</div>\
+        <div id="popup-gemini-textgen" class="details-popup">Genera r\'e1pidamente borradores de calidad. Ayuda a refinar trabajo ajustando tono, extensi\'f3n o formato. Puede procesar documentos extensos (con 2.5 Pro).</div>\
+        <div id="popup-gemini-code" class="details-popup">\'datil para escribir c\'f3digo, insertar explicaciones y depurar errores. Canvas en Gemini agiliza la creaci\'f3n de prototipos funcionales (web, Python).</div>\
+        <div id="popup-gemini-research" class="details-popup">Deep Research realiza investigaciones a fondo en tiempo real, generando informes exhaustivos con enlaces a fuentes. Potenciado por 2.5 Pro en Advanced.</div>\
+        <div id="popup-gemini-multi" class="details-popup">Capaz de procesar y trabajar con texto, im\'e1genes, videos y analizar conjuntos de datos multimodales para crear visualizaciones (pr\'f3ximamente). Ventana de contexto de 1M tokens (ampliable a 2M).</div>\
+        <div id="popup-gemini-audio" class="details-popup">La funci\'f3n "Audio Overview" transforma documentos en conversaciones estilo podcast entre IAs, resumiendo contenido e ideas (actualmente solo en ingl\'e9s).</div>\
+\
+        <div id="popup-nb-intro" class="details-popup">Notebook LM act\'faa como un asistente de investigaci\'f3n, ayudando a recopilar, organizar y contextualizar la informaci\'f3n de diversas fuentes que t\'fa proporcionas.</div>\
+        <div id="popup-nb-research" class="details-popup">Destaca como un experto personalizado en la informaci\'f3n que a\'f1ades. Permite sintetizar hechos e ideas de m\'faltiples fuentes, ideal para investigaci\'f3n y estudio.</div>\
+        <div id="popup-nb-summary" class="details-popup">Ideal para generar res\'famenes automatizados, ideas clave y hasta podcasts de audio (Audio Overview) a partir de tus notas y fuentes. Propone preguntas perspicaces sobre el material.</div>\
+        <div id="popup-nb-org" class="details-popup">Interfaz intuitiva que permite organizar fuentes (webs, PDFs, videos, etc.) en pesta\'f1as, como un "binder". Cada notebook es independiente (l\'edmite 50 docs).</div>\
+        <div id="popup-nb-guides" class="details-popup">A partir de las notas, puede crear gu\'edas de estudio, publicaciones de blog, planes de marketing, newsletters y otros formatos personalizados.</div>\
+        <div id="popup-nb-analysis" class="details-popup">Analiza y extrae informaci\'f3n de diversos formatos (PDFs, Google Docs, Slides, TXT, URLs, videos YouTube con transcripci\'f3n). Muestra citas originales relevantes.</div>\
+        <div id="popup-nb-maps" class="details-popup">Genera autom\'e1ticamente mapas mentales interactivos y cronolog\'edas ordenadas a partir de las fuentes cargadas, facilitando la comprensi\'f3n de conexiones y secuencias.</div>\
+        <div id="popup-nb-discover" class="details-popup">La funci\'f3n "descubrir fuente" (potenciada por Gemini) busca y selecciona autom\'e1ticamente fuentes relevantes y fiables basadas en la consulta del usuario.</div>\
+        <div id="popup-nb-collab" class="details-popup">Permite compartir notebooks con otros usuarios, asignando roles de lector o editor para facilitar el trabajo en equipo.</div> <div id="popup-integration-intro" class="details-popup">La combinaci\'f3n de Notebook LM (recopilaci\'f3n/organizaci\'f3n/an\'e1lisis de *tus* fuentes) y Gemini (generaci\'f3n creativa/investigaci\'f3n amplia) ofrece un flujo de trabajo altamente eficiente y potente.</div>\
+        <div id="popup-use-landing" class="details-popup">Usar NLM para investigar p\'fablico/pr\'e1cticas en tus fuentes; usar Gemini con ese contexto para generar dise\'f1o y contenido de la landing page.</div>\
+        <div id="popup-use-viz" class="details-popup">Analizar documentos t\'e9cnicos densos con NLM; luego usar Gemini para generar res\'famenes claros y visualizaciones interactivas.</div>\
+        <div id="popup-use-learn" class="details-popup">Recopilar tutoriales/libros en NLM; usar Gemini para crear m\'f3dulos de aprendizaje, cuestionarios y mapas conceptuales personalizados.</div>\
+        <div id="popup-use-validate" class="details-popup">NLM se utiliza para investigar tendencias del mercado y feedback de usuarios en tus fuentes; Gemini dise\'f1a prototipos funcionales basado en eso.</div>\
+\
+        <div id="popup-avail-free" class="details-popup">Acceso limitado a Gemini 2.5 Pro (experimental), Deep Research b\'e1sico, Notebook LM b\'e1sico, y Gemini 2.5 Pro v\'eda Google AI Studio.</div>\
+        <div id="popup-avail-paid" class="details-popup">Gemini Advanced ($19.99/mes, prueba 1 mes): Acceso ampliado a 2.5 Pro, l\'edmites superiores (archivos 1500 p\'e1g), Deep Research extendido, Veo 2 (pr\'f3x.), an\'e1lisis datos Sheets, integraci\'f3n Workspace, etc. NotebookLM Plus puede estar incluido en AI Premium.</div>\
+        <div id="popup-conclusion" class="details-popup">Son herramientas sofisticadas y vers\'e1tiles con potencial para transformar trabajo, investigaci\'f3n, creaci\'f3n y aprendizaje. Su integraci\'f3n ofrece un flujo robusto, posicion\'e1ndolas como actores clave en IA aplicada a productividad y conocimiento.</div>\
+\
+    </div>\
+\
+    <script>\
+        // Seleccionar todos los elementos que disparan el hover y el contenedor de popups\
+        const hoverTriggers = document.querySelectorAll('.hover-trigger');\
+        const popupContainer = document.getElementById('popup-container');\
+        let activePopup = null; // Para rastrear el popup activo\
+\
+        // Funci\'f3n para mostrar el popup\
+        const showPopup = (event) => \{\
+            const trigger = event.currentTarget;\
+            const targetId = trigger.dataset.popupTarget;\
+            const popup = document.getElementById(targetId);\
+\
+            if (!popup) return;\
+\
+            // Ocultar popup activo anterior si existe\
+            if (activePopup && activePopup !== popup) \{\
+                 activePopup.classList.remove('show');\
+            \}\
+\
+            // Mover el popup al contenedor principal (fuera del elemento trigger)\
+            popupContainer.appendChild(popup);\
+\
+            // Posicionar el popup\
+            const triggerRect = trigger.getBoundingClientRect();\
+            let top = triggerRect.bottom + window.scrollY + 5; // 5px debajo del trigger\
+            let left = triggerRect.left + window.scrollX; // Alinear a la izquierda del trigger\
+\
+            // Forzar rec\'e1lculo de dimensiones antes de ajustar posici\'f3n\
+            popup.style.display = 'block'; // Mostrar temporalmente para medir\
+            const popupHeight = popup.offsetHeight;\
+            const popupWidth = popup.offsetWidth;\
+            popup.style.display = ''; // Ocultar de nuevo antes de la transici\'f3n\
+\
+             // Ajustar si se sale por abajo\
+             if (triggerRect.bottom + popupHeight + 5 > window.innerHeight) \{\
+                 top = triggerRect.top + window.scrollY - popupHeight - 5; // Poner arriba\
+             \}\
+             // Ajustar si se sale por la derecha\
+            if (left + popupWidth > window.innerWidth) \{\
+                 left = window.innerWidth + window.scrollX - popupWidth - 10; // Dejar margen derecho\
+             \}\
+             // Asegurar que no se salga por la izquierda\
+             if (left < window.scrollX) \{\
+                 left = window.scrollX + 10; // Dejar margen izquierdo\
+             \}\
+             // Asegurar que no se salga por arriba\
+             if (top < window.scrollY) \{\
+                 top = window.scrollY + 10; // Dejar margen superior\
+             \}\
+\
+\
+            popup.style.top = `$\{top\}px`;\
+            popup.style.left = `$\{left\}px`;\
+\
+            // Usar requestAnimationFrame para asegurar que la clase se a\'f1ade despu\'e9s del c\'e1lculo\
+            requestAnimationFrame(() => \{\
+                popup.classList.add('show');\
+                activePopup = popup;\
+            \});\
+        \};\
+\
+        // Funci\'f3n para ocultar el popup\
+        const hidePopup = (event) => \{\
+             // Peque\'f1o retraso para permitir mover el cursor al popup si fuera necesario (aunque pointer-events: none lo evita)\
+            setTimeout(() => \{\
+                if (activePopup && !activePopup.matches(':hover')) \{ // Ocultar solo si el cursor no est\'e1 sobre el popup\
+                     activePopup.classList.remove('show');\
+                     activePopup = null;\
+                \}\
+            \}, 50); // Retraso corto\
+        \};\
+\
+         // Funci\'f3n para ocultar espec\'edficamente en blur\
+         const hidePopupOnBlur = (event) => \{\
+             if (activePopup) \{\
+                 activePopup.classList.remove('show');\
+                 activePopup = null;\
+             \}\
+         \};\
+\
+\
+        // A\'f1adir listeners a cada trigger\
+        hoverTriggers.forEach(trigger => \{\
+            trigger.addEventListener('mouseenter', showPopup);\
+            trigger.addEventListener('mouseleave', hidePopup);\
+            // Hacerlo enfocable y a\'f1adir listeners para accesibilidad\
+             trigger.setAttribute('tabindex', '0'); // Permite enfocar con teclado\
+             trigger.addEventListener('focus', showPopup);\
+             trigger.addEventListener('blur', hidePopupOnBlur); // Ocultar al perder foco\
+        \});\
+\
+         // Opcional: listener para cerrar popups al hacer clic fuera\
+         document.addEventListener('click', (event) => \{\
+             if (activePopup && !activePopup.contains(event.target) && ![...hoverTriggers].some(trigger => trigger.contains(event.target))) \{\
+                 activePopup.classList.remove('show');\
+                 activePopup = null;\
+             \}\
+         \});\
+\
+\
+    </script>\
+\
+</body>\
+</html>\
+}
