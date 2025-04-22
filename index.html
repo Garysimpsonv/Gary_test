@@ -1,0 +1,257 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2821
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="es">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>Casos de Uso: IA de Google (Notebook LM, Gemini, AI Studio)</title>\
+    <script src="https://cdn.tailwindcss.com"></script>\
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>\
+    <link rel="preconnect" href="https://fonts.googleapis.com">\
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\
+    <style>\
+        body \{\
+            font-family: 'Inter', sans-serif;\
+        \}\
+        /* Estilo adicional para transiciones suaves */\
+        .use-case-card \{\
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;\
+            will-change: opacity, transform; /* Optimizaci\'f3n para transiciones */\
+        \}\
+        /* Ocultar tarjetas inicialmente si se usa filtro */\
+        [x-cloak] \{ display: none !important; \}\
+\
+        /* Mejoras visuales para los selectores */\
+        select \{\
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");\
+            background-position: right 0.5rem center;\
+            background-repeat: no-repeat;\
+            background-size: 1.5em 1.5em;\
+            padding-right: 2.5rem;\
+            -webkit-appearance: none;\
+            -moz-appearance: none;\
+            appearance: none;\
+        \}\
+    </style>\
+</head>\
+<body class="bg-gray-100">\
+\
+    <div class="container mx-auto px-4 py-8 md:py-12" x-data="useCaseFilter()">\
+\
+        <header class="text-center mb-8 md:mb-12">\
+            <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 mb-2">Explora los Casos de Uso de IA de Google</h1>\
+            <p class="text-lg text-gray-600">Descubre c\'f3mo Notebook LM, Gemini Advanced y AI Studio pueden ayudarte.</p>\
+        </header>\
+\
+        <div class="bg-white p-4 rounded-lg shadow-md mb-8 sticky top-0 z-10">\
+            <div class="flex flex-col md:flex-row md:items-center gap-4">\
+                <div class="flex-1">\
+                    <label for="toolFilter" class="block text-sm font-medium text-gray-700 mb-1">Filtrar por Herramienta:</label>\
+                    <select id="toolFilter" x-model="selectedTool" @change="filterUseCases" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">\
+                        <option value="all">Todas las Herramientas</option>\
+                        <option value="Notebook LM">Notebook LM</option>\
+                        <option value="Gemini Advanced">Gemini Advanced</option>\
+                        <option value="Google AI Studio">Google AI Studio</option>\
+                    </select>\
+                </div>\
+                <div class="flex-1">\
+                    <label for="categoryFilter" class="block text-sm font-medium text-gray-700 mb-1">Filtrar por Categor\'eda:</label>\
+                    <select id="categoryFilter" x-model="selectedCategory" @change="filterUseCases" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">\
+                        <option value="all">Todas las Categor\'edas</option>\
+                        <template x-for="category in categories" :key="category">\
+                            <option :value="category" x-text="category"></option>\
+                        </template>\
+                    </select>\
+                </div>\
+            </div>\
+        </div>\
+\
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">\
+            <template x-for="(useCase, index) in filteredUseCases" :key="index">\
+                <div class="use-case-card bg-white rounded-lg shadow-lg overflow-hidden p-6 flex flex-col"\
+                     :data-tool="useCase.tool"\
+                     :data-category="useCase.category"\
+                     x-show="isVisible(useCase)"\
+                     x-transition:enter="transition ease-out duration-300"\
+                     x-transition:enter-start="opacity-0 transform scale-95"\
+                     x-transition:enter-end="opacity-100 transform scale-100"\
+                     x-transition:leave="transition ease-in duration-200"\
+                     x-transition:leave-start="opacity-100 transform scale-100"\
+                     x-transition:leave-end="opacity-0 transform scale-95">\
+\
+                    <span :class="getBadgeClass(useCase.tool)" class="inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 self-start" x-text="useCase.tool"></span>\
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2" x-text="useCase.title"></h3>\
+                    <p class="text-gray-600 text-sm mb-4 flex-grow" x-text="useCase.description"></p>\
+                    <span class="text-xs text-indigo-600 font-medium" x-text="`Categor\'eda: $\{useCase.category\}`"></span>\
+                </div>\
+            </template>\
+\
+             <div x-show="filteredUseCases.length === 0 && (selectedTool !== 'all' || selectedCategory !== 'all')" class="col-span-full text-center py-10 text-gray-500">\
+                No se encontraron casos de uso con los filtros seleccionados.\
+            </div>\
+        </div>\
+\
+        <footer class="text-center mt-12 pt-6 border-t border-gray-300">\
+            <p class="text-sm text-gray-500">&copy; 2025 - Informaci\'f3n basada en documentaci\'f3n y briefings.</p>\
+        </footer>\
+\
+    </div>\
+\
+    <script>\
+        function useCaseFilter() \{\
+            return \{\
+                selectedTool: 'all',\
+                selectedCategory: 'all',\
+                useCases: [\
+                    // Notebook LM Use Cases\
+                    \{\
+                        tool: 'Notebook LM',\
+                        category: 'Investigaci\'f3n y An\'e1lisis',\
+                        title: 'Investigaci\'f3n Personalizada',\
+                        description: 'Act\'faa como un experto en la informaci\'f3n que subes, sintetizando hechos e ideas de m\'faltiples fuentes (PDFs, Docs, URLs, videos).'\
+                    \},\
+                    \{\
+                        tool: 'Notebook LM',\
+                        category: 'Creaci\'f3n de Contenido',\
+                        title: 'Res\'famenes y Generaci\'f3n de Ideas',\
+                        description: 'Genera res\'famenes autom\'e1ticos, extrae ideas clave y propone preguntas perspicaces sobre el material cargado.'\
+                    \},\
+                    \{\
+                        tool: 'Notebook LM',\
+                        category: 'Organizaci\'f3n y Productividad',\
+                        title: 'Organizaci\'f3n de Fuentes',\
+                        description: 'Gestiona y organiza tus fuentes de informaci\'f3n en pesta\'f1as, como un "binder" digital, facilitando el acceso y la conexi\'f3n de ideas.'\
+                    \},\
+                    \{\
+                        tool: 'Notebook LM',\
+                        category: 'Investigaci\'f3n y An\'e1lisis',\
+                        title: 'An\'e1lisis de Documentos Espec\'edficos',\
+                        description: 'Analiza y extrae informaci\'f3n clave de diversos formatos (PDF, Docs, Slides, TXT, URLs, videos de YouTube con transcripci\'f3n) mostrando citas.'\
+                    \},\
+                    \{\
+                        tool: 'Notebook LM',\
+                        category: 'Creaci\'f3n de Contenido',\
+                        title: 'Creaci\'f3n de Gu\'edas y Formatos',\
+                        description: 'Transforma tus notas y fuentes en gu\'edas de estudio, borradores de blogs, planes de marketing, newsletters y m\'e1s.'\
+                    \},\
+                     \{\
+                        tool: 'Notebook LM',\
+                        category: 'Investigaci\'f3n y An\'e1lisis',\
+                        title: 'Mapas Conceptuales y Cronolog\'edas',\
+                        description: 'Genera autom\'e1ticamente mapas mentales interactivos para visualizar conexiones y cronolog\'edas ordenadas a partir de tus fuentes.'\
+                    \},\
+\
+                    // Gemini Advanced Use Cases\
+                    \{\
+                        tool: 'Gemini Advanced',\
+                        category: 'Creaci\'f3n de Contenido',\
+                        title: 'Generaci\'f3n de Texto Avanzado',\
+                        description: 'Crea borradores de alta calidad r\'e1pidamente, ayuda a refinar textos ajustando tono, longitud y formato. Procesa documentos extensos.'\
+                    \},\
+                    \{\
+                        tool: 'Gemini Advanced',\
+                        category: 'Programaci\'f3n y Desarrollo',\
+                        title: 'Asistencia en Programaci\'f3n',\
+                        description: 'Escribe, explica, completa y depura c\'f3digo en varios lenguajes. Ideal para prototipado r\'e1pido con Canvas.'\
+                    \},\
+                    \{\
+                        tool: 'Gemini Advanced',\
+                        category: 'Investigaci\'f3n y An\'e1lisis',\
+                        title: 'Deep Research (Investigaci\'f3n Profunda)',\
+                        description: 'Realiza investigaciones exhaustivas en tiempo real sobre casi cualquier tema, generando informes detallados con citas y fuentes.'\
+                    \},\
+                    \{\
+                        tool: 'Gemini Advanced',\
+                        category: 'Investigaci\'f3n y An\'e1lisis',\
+                        title: 'An\'e1lisis de Datos y Visualizaci\'f3n',\
+                        description: 'Analiza conjuntos de datos (Hojas de c\'e1lculo, CSV, Excel) y crea visualizaciones interactivas para facilitar la comprensi\'f3n (pr\'f3ximamente).'\
+                    \},\
+                    \{\
+                        tool: 'Gemini Advanced',\
+                        category: 'Organizaci\'f3n y Productividad',\
+                        title: 'Coach de Productividad (Workspace)',\
+                        description: 'Act\'faa como un coach personal: divide tareas complejas, ofrece gu\'eda contextual integrada con Gmail, Docs, Calendar, etc.'\
+                    \},\
+                     \{\
+                        tool: 'Gemini Advanced',\
+                        category: 'Creaci\'f3n de Contenido',\
+                        title: 'Audio Overview (Resumen en Audio)',\
+                        description: 'Transforma documentos en conversaciones estilo podcast entre IAs, resumiendo contenido e ideas (actualmente solo en ingl\'e9s).'\
+                    \},\
+\
+                    // Google AI Studio Use Cases\
+                    \{\
+                        tool: 'Google AI Studio',\
+                        category: 'Programaci\'f3n y Desarrollo',\
+                        title: 'Experimentaci\'f3n con Modelos Gemini',\
+                        description: 'Accede y prueba gratuitamente los \'faltimos modelos de Gemini (incluyendo versiones experimentales como 2.5 Pro) para entender sus capacidades.'\
+                    \},\
+                    \{\
+                        tool: 'Google AI Studio',\
+                        category: 'Programaci\'f3n y Desarrollo',\
+                        title: 'Prototipado R\'e1pido de IA',\
+                        description: 'Desarrolla y prueba r\'e1pidamente prototipos de aplicaciones basadas en IA antes de una implementaci\'f3n a gran escala.'\
+                    \},\
+                    \{\
+                        tool: 'Google AI Studio',\
+                        category: 'Programaci\'f3n y Desarrollo',\
+                        title: 'Ajuste de Prompts y Par\'e1metros',\
+                        description: 'Experimenta y refina prompts, ajusta par\'e1metros como temperatura y top-k para optimizar las respuestas del modelo para tareas espec\'edficas.'\
+                    \}\
+                ],\
+                filteredUseCases: [], // Inicialmente vac\'edo, se llenar\'e1\
+\
+                // Obtener categor\'edas \'fanicas\
+                get categories() \{\
+                    const allCategories = this.useCases.map(uc => uc.category);\
+                    return [...new Set(allCategories)].sort(); // Elimina duplicados y ordena\
+                \},\
+\
+                // Inicializar filtros\
+                init() \{\
+                    this.filterUseCases(); // Llama al filtro inicial\
+                \},\
+\
+                // L\'f3gica de filtrado\
+                filterUseCases() \{\
+                    this.filteredUseCases = this.useCases.filter(useCase => \{\
+                        const toolMatch = this.selectedTool === 'all' || useCase.tool === this.selectedTool;\
+                        const categoryMatch = this.selectedCategory === 'all' || useCase.category === this.selectedCategory;\
+                        return toolMatch && categoryMatch;\
+                    \});\
+                \},\
+\
+                // Determinar visibilidad para transiciones\
+                 isVisible(useCase) \{\
+                    const toolMatch = this.selectedTool === 'all' || useCase.tool === this.selectedTool;\
+                    const categoryMatch = this.selectedCategory === 'all' || useCase.category === this.selectedCategory;\
+                    return toolMatch && categoryMatch;\
+                \},\
+\
+                // Clase de estilo para la "badge" de la herramienta\
+                getBadgeClass(tool) \{\
+                    switch (tool) \{\
+                        case 'Notebook LM':\
+                            return 'bg-green-100 text-green-800';\
+                        case 'Gemini Advanced':\
+                            return 'bg-blue-100 text-blue-800';\
+                        case 'Google AI Studio':\
+                            return 'bg-purple-100 text-purple-800';\
+                        default:\
+                            return 'bg-gray-100 text-gray-800';\
+                    \}\
+                \}\
+            \}\
+        \}\
+    </script>\
+\
+</body>\
+</html>\
+}
